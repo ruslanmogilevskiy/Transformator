@@ -1,2 +1,2 @@
 # Transformator
-Flexibly and fluently transforms one data object to another
+Transforms one data object into one or many of others with flexibly and fluently defined tree of transformers.
