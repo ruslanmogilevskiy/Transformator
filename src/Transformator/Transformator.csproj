@@ -11,6 +11,7 @@
     <RepositoryUrl>https://github.com/ruslanmogilevskiy/Transformator</RepositoryUrl>
     <PackageTags>transformation, mapper, convertion</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
