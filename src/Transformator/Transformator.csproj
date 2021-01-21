@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Version>0.1.0</Version>
+    <Authors>Ruslan Mogilevskiy</Authors>
+    <Description>Transforms one data object into one or many of others with flexibly and fluently defined tree of transformers.</Description>
+    <Copyright>Ruslan Mogilevskiy</Copyright>
+    <PackageProjectUrl>https://github.com/ruslanmogilevskiy/Transformator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ruslanmogilevskiy/Transformator</RepositoryUrl>
+    <PackageTags>transformation, mapper, convertion</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Work\Projects\Libraries\Transformator\src\Transformator\Transformator.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+root = true
+
+# All files
+[*]
+indent_style = space
+max_line_length=150
+guidelines = 150
+guidelines_style = 1px dotted black
+
+# Code files
+[*.{cs,asax}]
+indent_size = 4
+charset = utf-8-bom

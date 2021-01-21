@@ -1,0 +1,8 @@
+﻿**/.vs/**
+**/.vshistory/**
+/src/Transformator/bin/**
+/src/Transformator/obj/**
+/src/Transformator.UnitTests/bin/**
+/src/Transformator.UnitTests/obj/**
+*.user
+*.xml
