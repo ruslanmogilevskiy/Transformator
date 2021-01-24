@@ -1,4 +1,5 @@
 ﻿using Transformator.Interfaces;
+using Transformator.Models;
 
 namespace Transformator.Transformators
 {

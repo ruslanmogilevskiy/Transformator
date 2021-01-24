@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Transformator.Interfaces;
+using Transformator.Models;
 
 namespace Transformator.Transformators
 {

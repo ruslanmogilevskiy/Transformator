@@ -5,7 +5,7 @@ namespace Transformator.Transformators
 {
     public abstract class AbstractTransformator<TSource, TDestination> : AbstractTransformation<TSource, TDestination>
     {
-        protected AbstractTransformator(TransformationBuilder<TSource, TDestination> builder)
+        protected AbstractTransformator(TransformationBuilder<TSource, TDestination> builder = null)
         {
             AttachTo(builder);
         }

@@ -1,38 +1,15 @@
-﻿using System;
-using Transformator.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+using Transformator.Models;
 
 namespace Transformator.Transformers
 {
+    /// <summary>
+    /// Base transformer that uses <see cref="TransformationContext"/> as a transformation context.
+    /// </summary>
+    /// <typeparam name="TSource">Source data type.</typeparam>
+    /// <typeparam name="TDestination">Destination data type.</typeparam>
+    [ExcludeFromCodeCoverage]
     public abstract class AbstractTransformer<TSource, TDestination> : TypedAbstractTransformer<TSource, TDestination, TransformationContext>
     {
-    }
-
-    public abstract class TypedAbstractTransformer<TSource, TDestination, TContext> : AbstractTransformation<TSource, TDestination>,
-        ITransformer<TSource, TDestination> where TContext : TransformationContext
-    {
-        public sealed override TDestination Transform(TSource source, TDestination destination, TransformationContext context)
-        {
-            switch (CanTransform(source, destination, (TContext) context))
-            {
-                case TransformAction.Transform:
-                    return DoTransform(source, destination, (TContext) context);
-
-                case TransformAction.PassThrough:
-                    return destination;
-
-                case TransformAction.BreakTransformation:
-                    return default;
-
-                default:
-                    throw new InvalidOperationException();
-            }
-        }
-
-        protected virtual TransformAction CanTransform(TSource source, TDestination destination, TContext context)
-        {
-            return TransformAction.Transform;
-        }
-
-        protected abstract TDestination DoTransform(TSource source, TDestination destination, TContext context);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Transformator.Interfaces
+﻿using Transformator.Models;
+
+namespace Transformator.Interfaces
 {
     public interface IAbstractTransformation<TSource, TDestination>
     {

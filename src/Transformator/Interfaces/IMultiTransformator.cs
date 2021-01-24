@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Transformator.Models;
 
 namespace Transformator.Interfaces
 {

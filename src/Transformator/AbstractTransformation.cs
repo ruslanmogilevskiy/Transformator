@@ -1,10 +1,11 @@
 ﻿using Transformator.Interfaces;
+using Transformator.Models;
 
 namespace Transformator
 {
     public abstract class AbstractTransformation<TSource, TDestination> : IAbstractTransformation<TSource, TDestination>
     {
-        internal TransformationBuilder<TSource, TDestination> Builder { get; private set; }
+        protected TransformationBuilder<TSource, TDestination> Builder { get; private set; }
 
         public bool IsIsolatedResult { get; set; }
 
@@ -15,7 +16,7 @@ namespace Transformator
 
         public abstract TDestination Transform(TSource source, TDestination destination, TransformationContext context);
 
-        protected virtual TDestination GetDestinationInstance(TransformationContext context, TDestination destination)
+        internal protected virtual TDestination GetDestinationInstance(TransformationContext context, TDestination destination)
         {
             if (destination == null)
                 return CreateDestinationInstance(context);
@@ -24,7 +25,7 @@ namespace Transformator
 
         TDestination CreateDestinationInstance(TransformationContext context)
         {
-            return Builder.InitialInstanceProvider != null ? Builder.InitialInstanceProvider(context) : default;
+            return Builder.InitialInstanceFactory != null ? Builder.InitialInstanceFactory(context) : default;
         }
     }
 }
