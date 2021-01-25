@@ -167,5 +167,112 @@ namespace Transformator.UnitTests
             var result = transformer.Transform(source, destination, context);
             Assert.AreEqual(customDestination, result);
         }
+
+        [Test]
+        public void IfDo_ConditionIsTrue_ExecuteTransformation()
+        {
+            var source = new Foo();
+            var destination = new Bar();
+            var customDestination = new Bar();
+
+            var builderInstance = _builder.IfDo((s, d, c) => c == null, (s, d, c) =>
+            {
+                Assert.AreEqual(source, s);
+                Assert.AreEqual(destination, d);
+                Assert.IsNull(c);
+
+                return customDestination;
+            });
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            var transformer = _builder.Transformations[0] as ConditionalTransformer<Foo, Bar>;
+            Assert.IsNotNull(transformer);
+            var result = transformer.Transform(source, destination, null);
+            Assert.AreEqual(customDestination, result);
+        }
+
+        [Test]
+        public void IfDo_ConditionIsFalse_DoNotExecuteTransformation()
+        {
+            var source = new Foo();
+            var destination = new Bar();
+            var customDestination = new Bar();
+            var context = new SomeTransformationContext();
+
+            var builderInstance = _builder.IfDo((s, d, c) => c == null, (s, d, c) =>
+            {
+                Assert.AreEqual(source, s);
+                Assert.AreEqual(destination, d);
+                Assert.IsNull(c);
+
+                return customDestination;
+            });
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            var transformer = _builder.Transformations[0] as ConditionalTransformer<Foo, Bar>;
+            Assert.IsNotNull(transformer);
+            var result = transformer.Transform(source, destination, context);
+            Assert.AreEqual(destination, result);
+        }
+
+        [Test]
+        public void Apply_AddPassedTransformerToTransformationsList()
+        {
+            var transformation = new MyAbstractTransformation();
+
+            var builderInstance = _builder.Apply(transformation);
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            Assert.AreEqual(transformation, _builder.Transformations[0]);
+        }
+
+        [Test]
+        public void Apply_Generic_CreateTransformer_AndAddItToTransformationsList()
+        {
+            var transformation = new MyAbstractTransformation();
+            
+            A.CallTo(() => _builder.CreateInstance<MyAbstractTransformation>())
+                .Returns(transformation);
+
+            var builderInstance = _builder.Apply<MyAbstractTransformation>();
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            Assert.AreEqual(transformation, _builder.Transformations[0]);
+        }
+
+        [Test]
+        public void ApplyIsolated_AddPassedTransformerToTransformationsList()
+        {
+            var transformation = new MyAbstractTransformation();
+            Assert.IsFalse(transformation.IsIsolatedResult);
+
+            var builderInstance = _builder.ApplyIsolated(transformation);
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            Assert.AreEqual(transformation, _builder.Transformations[0]);
+            Assert.IsTrue(transformation.IsIsolatedResult);
+        }
+
+        [Test]
+        public void ApplyIsolated_Generic_CreateTransformer_AndAddItToTransformationsList()
+        {
+            var transformation = new MyAbstractTransformation();
+            Assert.IsFalse(transformation.IsIsolatedResult);
+
+            A.CallTo(() => _builder.CreateInstance<MyAbstractTransformation>())
+                .Returns(transformation);
+
+            var builderInstance = _builder.ApplyIsolated<MyAbstractTransformation>();
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            Assert.AreEqual(transformation, _builder.Transformations[0]);
+            Assert.IsTrue(transformation.IsIsolatedResult);
+        }
     }
 }

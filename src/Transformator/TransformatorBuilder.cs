@@ -5,7 +5,7 @@ namespace Transformator
     /// <summary>
     /// Transformation builders factory.
     /// </summary>
-    public static class Transformator
+    public static class TransformatorBuilder
     {
         /// <summary>
         /// Transformation default settings that are applied to each transformation builder created via

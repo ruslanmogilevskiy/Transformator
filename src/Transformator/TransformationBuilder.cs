@@ -103,6 +103,9 @@ namespace Transformator
             return this;
         }
 
+        /// <summary>Applies the transformation <paramref name="action"/> only when <paramref name="condition"/> returns true.</summary>
+        /// <param name="condition">The condition to evaluate.</param>
+        /// <param name="action">The action to execute when condition is true.</param>
         public TransformationBuilder<TSource, TDestination> IfDo(Func<TSource, TDestination, TransformationContext, bool> condition,
             Func<TSource, TDestination, TransformationContext, TDestination> action)
         {
@@ -110,14 +113,14 @@ namespace Transformator
             return this;
         }
 
-        /// <summary>Add new transformer to the transformation chain.</summary>
+        /// <summary>Add the <paramref name="transformation"/> step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> Apply(IAbstractTransformation<TSource, TDestination> transformation)
         {
             Transformations.Add(transformation);
             return this;
         }
 
-        /// <summary>Add new transformer to the transformation chain.</summary>
+        /// <summary>Add the transformation step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> Apply<T>() where T : IAbstractTransformation<TSource, TDestination>
         {
             var transformation = CreateInstance<T>();
@@ -125,7 +128,7 @@ namespace Transformator
             return this;
         }
 
-        /// <summary>Add new transformer to the transformation chain.</summary>
+        /// <summary>Add the isolated <paramref name="transformation"/> step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> ApplyIsolated(IAbstractTransformation<TSource, TDestination> transformation)
         {
             transformation.IsIsolatedResult = true;
@@ -133,7 +136,7 @@ namespace Transformator
             return this;
         }
 
-        /// <summary>Add new transformer to the transformation chain.</summary>
+        /// <summary>Add the isolated transformation step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> ApplyIsolated<T>()
             where T : IAbstractTransformation<TSource, TDestination>
         {

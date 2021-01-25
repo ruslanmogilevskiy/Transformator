@@ -16,7 +16,7 @@ namespace Transformator
 
         public abstract TDestination Transform(TSource source, TDestination destination, TransformationContext context);
 
-        internal protected virtual TDestination GetDestinationInstance(TransformationContext context, TDestination destination)
+        protected internal virtual TDestination GetDestinationInstance(TransformationContext context, TDestination destination)
         {
             if (destination == null)
                 return CreateDestinationInstance(context);
