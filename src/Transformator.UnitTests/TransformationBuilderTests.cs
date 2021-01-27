@@ -11,7 +11,7 @@ namespace Transformator.UnitTests
     [TestFixture]
     public class TransformationBuilderTests
     {
-        class MyAbstractTransformation : AbstractTransformation<Foo, Bar>
+        public class MyAbstractTransformation : AbstractTransformation<Foo, Bar>
         {
             public TransformationBuilder<Foo, Bar> GetBuilder()
             {
@@ -36,11 +36,11 @@ namespace Transformator.UnitTests
         [Test]
         public void Ctor_PassedSettingsAreAccessibleViaSettingsProperty()
         {
-            var settings = new TransformationSettings();
+            var settings = new TransformationConfiguration();
 
             var builder = new TransformationBuilder<Foo, Bar>(settings);
 
-            Assert.AreEqual(settings, builder.Settings);
+            Assert.AreEqual(settings, builder.Configuration);
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace Transformator.UnitTests
         [Test]
         public void CreateInstance_InstanceFactoryIsNull_UseActivator()
         {
-            _builder.WithSettings(null);
+            _builder.WithConfiguration(null);
 
             var result = _builder.CreateInstance<Foo>();
 
@@ -94,7 +94,7 @@ namespace Transformator.UnitTests
         public void CreateInstance_InstanceFactoryIsNotNull_CallFactory_AndReturnInstance()
         {
             var instance = new Foo();
-            _builder.WithSettings(new TransformationSettings { InstanceFactory = t => instance });
+            _builder.WithConfiguration(new TransformationConfiguration { InstanceFactory = t => instance });
 
             var result = _builder.CreateInstance<Foo>();
 
@@ -105,11 +105,11 @@ namespace Transformator.UnitTests
         [Test]
         public void WithSettings_SetSettingsProperty()
         {
-            var settings = new TransformationSettings();
+            var settings = new TransformationConfiguration();
 
-            var builderInstance = _builder.WithSettings(settings);
+            var builderInstance = _builder.WithConfiguration(settings);
 
-            Assert.AreEqual(settings, _builder.Settings);
+            Assert.AreEqual(settings, _builder.Configuration);
             Assert.AreEqual(_builder, builderInstance);
         }
 
@@ -119,7 +119,7 @@ namespace Transformator.UnitTests
             var initialValue = new Bar();
 
             var builderInstance = _builder.WithInitialValue(initialValue);
-            var result = _builder.InitialInstanceFactory(null);
+            var result = _builder.InitialDestinationFactory(null);
 
             Assert.AreEqual(_builder, builderInstance);
             Assert.AreEqual(initialValue, result);
@@ -273,6 +273,62 @@ namespace Transformator.UnitTests
             Assert.AreEqual(1, _builder.Transformations.Count);
             Assert.AreEqual(transformation, _builder.Transformations[0]);
             Assert.IsTrue(transformation.IsIsolatedResult);
+        }
+
+        [Test]
+        public void IfApply_AddConditionalTransformer_WithSpecifiedConditionAndTransformation_AndNonIsolatedResult()
+        {
+            var transformation = A.Fake<MyAbstractTransformation>();
+            var source = new Foo();
+            var destination = new Bar();
+            var context = new SomeTransformationContext();
+            var newDestination = new Bar();
+
+            A.CallTo(() => transformation.Transform(source, destination, context))
+                .Returns(newDestination);
+
+            var builderInstance = _builder.IfApply((s, d, c) => true, transformation);
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            var conditionalTransformer = _builder.Transformations[0] as ConditionalTransformer<Foo, Bar>;
+            Assert.IsNotNull(conditionalTransformer);
+            Assert.IsFalse(conditionalTransformer.IsIsolatedResult);
+            var transformationResult = conditionalTransformer.Transform(source, destination, context);
+            Assert.AreEqual(newDestination, transformationResult);
+        }
+
+        [Test]
+        public void IfApplyIsolated_AddConditionalTransformer_WithSpecifiedConditionAndTransformation_AndIsolatedResult()
+        {
+            var transformation = A.Fake<MyAbstractTransformation>();
+            var source = new Foo();
+            var destination = new Bar();
+            var context = new SomeTransformationContext();
+            var newDestination = new Bar();
+            var transformedDestination = new Bar();
+
+            _builder.Configuration.InstanceFactory = t =>
+            {
+                if (t == typeof(Bar))
+                {
+                    return newDestination;
+                }
+
+                return null;
+            };
+            A.CallTo(() => transformation.Transform(source, newDestination, context))
+                .Returns(transformedDestination);
+
+            var builderInstance = _builder.IfApplyIsolated((s, d, c) => true, transformation);
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.AreEqual(1, _builder.Transformations.Count);
+            var conditionalTransformer = _builder.Transformations[0] as ConditionalTransformer<Foo, Bar>;
+            Assert.IsNotNull(conditionalTransformer);
+            Assert.IsTrue(conditionalTransformer.IsIsolatedResult);
+            var transformationResult = conditionalTransformer.Transform(source, destination, context);
+            Assert.AreEqual(transformedDestination, transformationResult);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Transformator.Helpers;
 using Transformator.Interfaces;
 using Transformator.Models;
 using Transformator.Transformators;
@@ -22,14 +23,14 @@ namespace Transformator
         /// <summary>Initial destination instance factory method.</summary>
         /// <remarks>Used to dynamically customize the destination type instantiation when transformation starts. It not supplied, the destination
         /// instance will be created via Activator.</remarks>
-        public Func<TransformationContext, TDestination> InitialInstanceFactory { get; set; }
+        public Func<TransformationContext, TDestination> InitialDestinationFactory { get; set; }
 
-        /// <summary>Transformation settings.</summary>
-        protected internal TransformationSettings Settings { get; private set; }
+        /// <summary>Transformation configuration.</summary>
+        protected internal TransformationConfiguration Configuration { get; private set; }
 
-        public TransformationBuilder(TransformationSettings settings = null)
+        public TransformationBuilder(TransformationConfiguration configuration = null)
         {
-            Settings = settings;
+            Configuration = configuration;
             var list = new ObservableCollection<IAbstractTransformation<TSource, TDestination>>();
             list.CollectionChanged += List_CollectionChanged;
             Transformations = list;
@@ -59,12 +60,8 @@ namespace Transformator
         /// <typeparam name="T">The type which instance to create.</typeparam>
         protected internal virtual T CreateInstance<T>()
         {
-            if (Settings?.InstanceFactory != null)
-            {
-                return (T)Settings.InstanceFactory(typeof(T));
-            }
-
-            return Activator.CreateInstance<T>();
+            var result = Configuration.CreateInstanceSafe<T>();
+            return result;
         }
 
         /// <summary>Builds the single-result transformation.</summary>
@@ -79,11 +76,11 @@ namespace Transformator
             return new MultiResultTransformator<TSource, TDestination>(this);
         }
 
-        /// <summary>Sets transformation settings that will be used for the transformation flow.</summary>
-        /// <param name="settings">Transformation settings.</param>
-        public TransformationBuilder<TSource, TDestination> WithSettings(TransformationSettings settings)
+        /// <summary>Sets transformation configuration that will be used for the transformation flow.</summary>
+        /// <param name="configuration">Transformation configuration.</param>
+        public TransformationBuilder<TSource, TDestination> WithConfiguration(TransformationConfiguration configuration)
         {
-            Settings = settings;
+            Configuration = configuration;
             return this;
         }
 
@@ -91,7 +88,7 @@ namespace Transformator
         /// <param name="destinationInitialValue">Destination initial value.</param>
         public TransformationBuilder<TSource, TDestination> WithInitialValue(TDestination destinationInitialValue)
         {
-            InitialInstanceFactory = _ => destinationInitialValue;
+            InitialDestinationFactory = _ => destinationInitialValue;
             return this;
         }
 
@@ -113,7 +110,7 @@ namespace Transformator
             return this;
         }
 
-        /// <summary>Add the <paramref name="transformation"/> step to the transformation chain.</summary>
+        /// <summary>Add the transformation step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> Apply(IAbstractTransformation<TSource, TDestination> transformation)
         {
             Transformations.Add(transformation);
@@ -128,7 +125,7 @@ namespace Transformator
             return this;
         }
 
-        /// <summary>Add the isolated <paramref name="transformation"/> step to the transformation chain.</summary>
+        /// <summary>Add the isolated transformation step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> ApplyIsolated(IAbstractTransformation<TSource, TDestination> transformation)
         {
             transformation.IsIsolatedResult = true;
@@ -146,6 +143,10 @@ namespace Transformator
             return this;
         }
 
+        /// <summary>Add the specified transformation step to the transformation chain if the specified condition returns true.</summary>
+        /// <param name="condition">The condition function that defines whether to apply the specified transformation. It's evaluated in run-time when the
+        /// transformation is going.</param>
+        /// <param name="transformation">The transformation to apply.</param>
         public TransformationBuilder<TSource, TDestination> IfApply(Func<TSource, TDestination, TransformationContext, bool> condition,
             IAbstractTransformation<TSource, TDestination> transformation)
         {
@@ -153,6 +154,10 @@ namespace Transformator
             return this;
         }
 
+        /// <summary>Add the specified isolated transformation step to the transformation chain if the specified condition returns true.</summary>
+        /// <param name="condition">The condition function that defines whether to apply the specified transformation. It's evaluated in run-time when the
+        /// transformation is going.</param>
+        /// <param name="transformation">The transformation to apply.</param>
         public TransformationBuilder<TSource, TDestination> IfApplyIsolated(Func<TSource, TDestination, TransformationContext, bool> condition,
             IAbstractTransformation<TSource, TDestination> transformation)
         {

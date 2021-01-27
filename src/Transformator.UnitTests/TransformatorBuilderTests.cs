@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Transformator.Models;
 using Transformator.UnitTests.TestHelpers;
 
 namespace Transformator.UnitTests
@@ -7,42 +6,16 @@ namespace Transformator.UnitTests
     [TestFixture]
     public class TransformatorBuilderTests
     {
-        [TearDown]
-        public void TearDown()
-        {
-            TransformatorBuilder.DefaultSettings = null;
-        }
-
         [Test]
-        public void DefaultSettings_SetNewInstance_SameInstanceReturnedFromGetter()
+        public void For_ReturnTransformationBuilderWithClonedDefaultConfiguration()
         {
-            var settings = new TransformationSettings();
-
-            TransformatorBuilder.DefaultSettings = settings;
-
-            Assert.AreEqual(settings, TransformatorBuilder.DefaultSettings);
-        }
-
-        [Test]
-        public void For_DefaultSettingsAreNull_ReturnTransformationBuilderWithNullSettings()
-        {
-            TransformatorBuilder.DefaultSettings = null;
+            TransformationConfiguration.Default.InstanceFactory = _ => null;
 
             var result = TransformatorBuilder.For<Foo, Bar>();
 
             Assert.IsNotNull(result);
-            Assert.IsNull(result.Settings);
-        }
-
-        [Test]
-        public void For_DefaultSettingsAreNotNull_ReturnTransformationBuilderWithDefaultSettings()
-        {
-            TransformatorBuilder.DefaultSettings = new TransformationSettings();
-
-            var result = TransformatorBuilder.For<Foo, Bar>();
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(TransformatorBuilder.DefaultSettings, result.Settings);
+            Assert.IsNotNull(result.Configuration);
+            Assert.AreEqual(TransformationConfiguration.Default.InstanceFactory, result.Configuration.InstanceFactory);
         }
     }
 }

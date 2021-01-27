@@ -5,13 +5,13 @@
     /// </summary>
     public enum TransformAction
     {
-        /// <summary>Do the transformation.</summary>
+        /// <summary>Apply the transformation.</summary>
         Transform,
 
         /// <summary>Don't apply the transformation but do not break the transformation flow.</summary>
         PassThrough,
 
-        /// <summary>Break the transformation flow.</summary>
+        /// <summary>Break the whole transformation flow.</summary>
         BreakTransformation
     }
 }
