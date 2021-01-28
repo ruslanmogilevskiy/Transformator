@@ -13,7 +13,7 @@ namespace Transformator
         /// <returns>Transformation builder for specified data types.</returns>
         public static TransformationBuilder<TSource, TDestination> For<TSource, TDestination>()
         {
-            return new(TransformationConfiguration.Default.Clone());
+            return new(TransformationConfiguration.Default?.Clone());
         }
     }
 }

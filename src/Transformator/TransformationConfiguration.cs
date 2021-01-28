@@ -12,7 +12,7 @@ namespace Transformator
         /// <summary>
         /// The transformation configuration that's used as a basis configuration for all transformations created with <see cref="TransformatorBuilder.For" />.
         /// </summary>
-        public static TransformationConfiguration Default { get; } = new();
+        public static TransformationConfiguration Default { get; set; }
 
         /// <summary>Abstracts the instantiation of required types within the transformation flow.</summary>
         /// <remarks>Could be used to connect transformation flows with used dependency injection containers, etc.</remarks>

@@ -96,6 +96,8 @@ namespace Transformator
         /// <param name="action">An action to execute.</param>
         public TransformationBuilder<TSource, TDestination> Do(Func<TSource, TDestination, TransformationContext, TDestination> action)
         {
+            ArgGuard.NotNull(action, nameof(action));
+
             Transformations.Add(new ActionTransformer<TSource, TDestination>(action));
             return this;
         }
@@ -106,6 +108,9 @@ namespace Transformator
         public TransformationBuilder<TSource, TDestination> IfDo(Func<TSource, TDestination, TransformationContext, bool> condition,
             Func<TSource, TDestination, TransformationContext, TDestination> action)
         {
+            ArgGuard.NotNull(condition, nameof(condition));
+            ArgGuard.NotNull(action, nameof(action));
+          
             Transformations.Add(new ConditionalTransformer<TSource, TDestination>(condition, action));
             return this;
         }
@@ -113,6 +118,8 @@ namespace Transformator
         /// <summary>Add the transformation step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> Apply(IAbstractTransformation<TSource, TDestination> transformation)
         {
+            ArgGuard.NotNull(transformation, nameof(transformation));
+           
             Transformations.Add(transformation);
             return this;
         }
@@ -128,6 +135,8 @@ namespace Transformator
         /// <summary>Add the isolated transformation step to the transformation chain.</summary>
         public TransformationBuilder<TSource, TDestination> ApplyIsolated(IAbstractTransformation<TSource, TDestination> transformation)
         {
+            ArgGuard.NotNull(transformation, nameof(transformation));
+          
             transformation.IsIsolatedResult = true;
             Transformations.Add(transformation);
             return this;
@@ -150,6 +159,9 @@ namespace Transformator
         public TransformationBuilder<TSource, TDestination> IfApply(Func<TSource, TDestination, TransformationContext, bool> condition,
             IAbstractTransformation<TSource, TDestination> transformation)
         {
+            ArgGuard.NotNull(condition, nameof(condition));
+            ArgGuard.NotNull(transformation, nameof(transformation));
+          
             Transformations.Add(new ConditionalTransformer<TSource, TDestination>(condition, transformation.Transform));
             return this;
         }
@@ -161,6 +173,9 @@ namespace Transformator
         public TransformationBuilder<TSource, TDestination> IfApplyIsolated(Func<TSource, TDestination, TransformationContext, bool> condition,
             IAbstractTransformation<TSource, TDestination> transformation)
         {
+            ArgGuard.NotNull(condition, nameof(condition));
+            ArgGuard.NotNull(transformation, nameof(transformation));
+
             Transformations.Add(new ConditionalTransformer<TSource, TDestination>(condition, transformation.Transform, true));
             return this;
         }
