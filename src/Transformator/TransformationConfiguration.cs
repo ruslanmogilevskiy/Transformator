@@ -28,6 +28,7 @@ namespace Transformator
         {
             return new()
             {
+                AutoCreateDestination = AutoCreateDestination,
                 InstanceFactory = InstanceFactory
             };
         }

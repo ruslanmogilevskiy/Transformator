@@ -8,11 +8,16 @@ namespace Transformator.UnitTests
         [Test]
         public void Clone_ReturnClonedConfiguration()
         {
-            var config = new TransformationConfiguration { InstanceFactory = _ => null };
+            var config = new TransformationConfiguration
+            {
+                InstanceFactory = _ => null,
+                AutoCreateDestination = false
+            };
 
             var result = config.Clone();
 
             Assert.IsNotNull(result);
+            Assert.AreEqual(config.AutoCreateDestination, result.AutoCreateDestination);
             Assert.AreEqual(config.InstanceFactory, result.InstanceFactory);
             config.InstanceFactory = _ => new object();
             Assert.AreNotEqual(config.InstanceFactory, result.InstanceFactory);
