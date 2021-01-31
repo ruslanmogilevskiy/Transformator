@@ -1,11 +1,9 @@
-﻿using Transformator.Models;
-
-namespace Transformator
+﻿namespace Transformator
 {
     /// <summary>
     /// Transformation builders factory.
     /// </summary>
-    public static class TransformatorBuilder
+    public static class Transformation
     {
         /// <summary>Defines a transformation builder to transform from <c>TSource</c> to <c>TDestination</c> data types.</summary>
         /// <typeparam name="TSource">Source data type that the transformation flow will start from and receive it as an input.</typeparam>

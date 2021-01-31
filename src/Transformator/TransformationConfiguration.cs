@@ -10,7 +10,7 @@ namespace Transformator
     public class TransformationConfiguration
     {
         /// <summary>
-        /// The transformation configuration that's used as a basis configuration for all transformations created with <see cref="TransformatorBuilder.For" />.
+        /// The transformation configuration that's used as a basis configuration for all transformations created with <see cref="Transformation.For" />.
         /// </summary>
         public static TransformationConfiguration Default { get; set; }
 

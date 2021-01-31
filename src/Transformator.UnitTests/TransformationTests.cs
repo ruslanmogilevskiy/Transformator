@@ -4,7 +4,7 @@ using Transformator.UnitTests.TestHelpers;
 namespace Transformator.UnitTests
 {
     [TestFixture]
-    public class TransformatorBuilderTests
+    public class TransformationTests
     {
         [Test]
         public void For_DefaultConfigurationIsNotNull_ReturnTransformationBuilderWithClonedDefaultConfiguration()
@@ -15,7 +15,7 @@ namespace Transformator.UnitTests
                 AutoCreateDestination = true
             };
 
-            var result = TransformatorBuilder.For<Foo, Bar>();
+            var result = Transformation.For<Foo, Bar>();
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Configuration);
@@ -28,7 +28,7 @@ namespace Transformator.UnitTests
         {
             TransformationConfiguration.Default = null;
 
-            var result = TransformatorBuilder.For<Foo, Bar>();
+            var result = Transformation.For<Foo, Bar>();
 
             Assert.IsNotNull(result);
             Assert.IsNull(result.Configuration);
