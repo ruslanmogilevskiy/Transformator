@@ -3,7 +3,10 @@ Transforms one data object into one or many of others with flexibly and fluently
 
 **Downloads**: 
 
-![nuget](https://img.shields.io/nuget/v/Rumo.Transformator)
+<a href="https://www.nuget.org/packages/Rumo.Transformator/" alt="Contributors">
+    <img src="https://img.shields.io/nuget/v/Rumo.Transformator" /><br/><br/>
+</a>
+
 
 
 **Use cases**: 
