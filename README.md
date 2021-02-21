@@ -1,7 +1,13 @@
 # Transformator
 Transforms one data object into one or many of others with flexibly and fluently defined tree of transformers.
 
-**Usage use case**: you have an income message/event/request and based on it you need to produce one or more, possibly linked to or dependant on each other data objects. This could be done in scope of a business workflow or an income request processing.
+**Downloads**: 
+
+![nuget](https://img.shields.io/nuget/v/Rumo.Transformator)
+
+
+**Use cases**: 
+* you have an income message/event/request and based on it you need to produce one or more, possibly linked to or dependant on each other data objects. This could be done in scope of a business workflow or an income request processing.
 
 **Features**
 
