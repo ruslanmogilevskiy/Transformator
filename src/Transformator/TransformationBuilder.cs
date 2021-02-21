@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Transformator.Configuration;
 using Transformator.Helpers;
 using Transformator.Interfaces;
 using Transformator.Models;
@@ -18,20 +19,21 @@ namespace Transformator
     public class TransformationBuilder<TSource, TDestination>
     {
         /// <summary>Transformations list.</summary>
-        public IList<IAbstractTransformation<TSource, TDestination>> Transformations { get; }
+        public IList<AbstractTransformation<TSource, TDestination>> Transformations { get; }
 
         /// <summary>Initial destination instance factory method.</summary>
         /// <remarks>Used to dynamically customize the destination type instantiation when transformation starts. It not supplied, the destination
         /// instance will be created via Activator.</remarks>
         public Func<TransformationContext, TDestination> InitialDestinationFactory { get; set; }
 
-        /// <summary>Transformation configuration.</summary>
+        /// <summary>Transformation configuration to use on the transformation.</summary>
+        /// <remarks>Could be change via <see cref="WithConfiguration"/> method.</remarks>
         protected internal TransformationConfiguration Configuration { get; private set; }
 
         public TransformationBuilder(TransformationConfiguration configuration = null)
         {
             Configuration = configuration;
-            var list = new ObservableCollection<IAbstractTransformation<TSource, TDestination>>();
+            var list = new ObservableCollection<AbstractTransformation<TSource, TDestination>>();
             list.CollectionChanged += List_CollectionChanged;
             Transformations = list;
         }
@@ -80,6 +82,8 @@ namespace Transformator
         /// <param name="configuration">Transformation configuration.</param>
         public TransformationBuilder<TSource, TDestination> WithConfiguration(TransformationConfiguration configuration)
         {
+            ArgGuard.NotNull(configuration, nameof(configuration));
+
             Configuration = configuration;
             return this;
         }
@@ -116,7 +120,7 @@ namespace Transformator
         }
 
         /// <summary>Add the transformation step to the transformation chain.</summary>
-        public TransformationBuilder<TSource, TDestination> Apply(IAbstractTransformation<TSource, TDestination> transformation)
+        public TransformationBuilder<TSource, TDestination> Apply(AbstractTransformation<TSource, TDestination> transformation)
         {
             ArgGuard.NotNull(transformation, nameof(transformation));
            
@@ -125,31 +129,28 @@ namespace Transformator
         }
 
         /// <summary>Add the transformation step to the transformation chain.</summary>
-        public TransformationBuilder<TSource, TDestination> Apply<T>() where T : IAbstractTransformation<TSource, TDestination>
+        public TransformationBuilder<TSource, TDestination> Apply<T>() 
+            where T : AbstractTransformation<TSource, TDestination>
         {
-            var transformation = CreateInstance<T>();
-            Transformations.Add(transformation);
-            return this;
+            return Apply(CreateInstance<T>());
         }
 
         /// <summary>Add the isolated transformation step to the transformation chain.</summary>
-        public TransformationBuilder<TSource, TDestination> ApplyIsolated(IAbstractTransformation<TSource, TDestination> transformation)
+        public TransformationBuilder<TSource, TDestination> ApplyIsolated(AbstractTransformation<TSource, TDestination> transformation, bool? keepInitialDestination = null)
         {
             ArgGuard.NotNull(transformation, nameof(transformation));
           
             transformation.IsIsolatedResult = true;
+            transformation.KeepInitialDestination = keepInitialDestination ?? !Configuration.IsolateInitialDestination;
             Transformations.Add(transformation);
             return this;
         }
 
         /// <summary>Add the isolated transformation step to the transformation chain.</summary>
-        public TransformationBuilder<TSource, TDestination> ApplyIsolated<T>()
-            where T : IAbstractTransformation<TSource, TDestination>
+        public TransformationBuilder<TSource, TDestination> ApplyIsolated<T>(bool? keepInitialDestination = null)
+            where T : AbstractTransformation<TSource, TDestination>
         {
-            var transformation = CreateInstance<T>();
-            transformation.IsIsolatedResult = true;
-            Transformations.Add(transformation);
-            return this;
+            return ApplyIsolated(CreateInstance<T>(), keepInitialDestination);
         }
 
         /// <summary>Add the specified transformation step to the transformation chain if the specified condition returns true.</summary>
@@ -157,7 +158,7 @@ namespace Transformator
         /// transformation is going.</param>
         /// <param name="transformation">The transformation to apply.</param>
         public TransformationBuilder<TSource, TDestination> IfApply(Func<TSource, TDestination, TransformationContext, bool> condition,
-            IAbstractTransformation<TSource, TDestination> transformation)
+            AbstractTransformation<TSource, TDestination> transformation)
         {
             ArgGuard.NotNull(condition, nameof(condition));
             ArgGuard.NotNull(transformation, nameof(transformation));
@@ -171,7 +172,7 @@ namespace Transformator
         /// transformation is going.</param>
         /// <param name="transformation">The transformation to apply.</param>
         public TransformationBuilder<TSource, TDestination> IfApplyIsolated(Func<TSource, TDestination, TransformationContext, bool> condition,
-            IAbstractTransformation<TSource, TDestination> transformation)
+            AbstractTransformation<TSource, TDestination> transformation)
         {
             ArgGuard.NotNull(condition, nameof(condition));
             ArgGuard.NotNull(transformation, nameof(transformation));

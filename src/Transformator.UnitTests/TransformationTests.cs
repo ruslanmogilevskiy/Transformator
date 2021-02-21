@@ -1,19 +1,18 @@
 ﻿using NUnit.Framework;
+using Transformator.Configuration;
 using Transformator.UnitTests.TestHelpers;
 
 namespace Transformator.UnitTests
 {
     [TestFixture]
-    public class TransformationTests
+    public class TransformationTests : TestBase
     {
         [Test]
-        public void For_DefaultConfigurationIsNotNull_ReturnTransformationBuilderWithClonedDefaultConfiguration()
+        public void For_ReturnTransformationBuilderWithClonedDefaultConfiguration()
         {
-            TransformationConfiguration.Default = new TransformationConfiguration
-            {
-                InstanceFactory = _ => null,
-                AutoCreateDestination = true
-            };
+            TransformationConfiguration.Default.InstanceFactory = _ => null;
+            TransformationConfiguration.Default.AutoCreateDestination = true;
+            TransformationConfiguration.Default.IsolateInitialDestination = true;
 
             var result = Transformation.For<Foo, Bar>();
 
@@ -21,17 +20,7 @@ namespace Transformator.UnitTests
             Assert.IsNotNull(result.Configuration);
             Assert.AreEqual(TransformationConfiguration.Default.InstanceFactory, result.Configuration.InstanceFactory);
             Assert.AreEqual(TransformationConfiguration.Default.AutoCreateDestination, result.Configuration.AutoCreateDestination);
-        }
-
-        [Test]
-        public void For_DefaultConfigurationIsNull_ReturnTransformationBuilderWithNullConfiguration()
-        {
-            TransformationConfiguration.Default = null;
-
-            var result = Transformation.For<Foo, Bar>();
-
-            Assert.IsNotNull(result);
-            Assert.IsNull(result.Configuration);
+            Assert.AreEqual(TransformationConfiguration.Default.IsolateInitialDestination, result.Configuration.IsolateInitialDestination);
         }
     }
 }

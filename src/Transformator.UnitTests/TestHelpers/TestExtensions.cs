@@ -10,5 +10,10 @@ namespace Transformator.UnitTests.TestHelpers
                 .CallsBaseMethod();
             return fake;
         }
+
+        public static string GetArgumentNullExceptionMessage(this string argName)
+        {
+            return $"Value cannot be null.\r\nParameter name: {argName}";
+        }
     }
 }

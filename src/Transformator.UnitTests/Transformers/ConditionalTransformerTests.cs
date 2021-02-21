@@ -8,7 +8,7 @@ using Transformator.UnitTests.TestHelpers;
 namespace Transformator.UnitTests.Transformers
 {
     [TestFixture]
-    public class ConditionalTransformerTests
+    public class ConditionalTransformerTests : TestBase
     {
         [Test]
         public void DoTransform_ConditionReturnFalse_PassedActionIsNotCalled_AndReturnDestination()

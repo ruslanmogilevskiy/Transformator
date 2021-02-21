@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <AssemblyName>Transformator.UnitTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

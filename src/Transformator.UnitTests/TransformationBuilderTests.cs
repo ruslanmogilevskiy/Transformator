@@ -1,6 +1,7 @@
 ﻿using System;
 using FakeItEasy;
 using NUnit.Framework;
+using Transformator.Configuration;
 using Transformator.Models;
 using Transformator.Transformators;
 using Transformator.Transformers;
@@ -9,7 +10,7 @@ using Transformator.UnitTests.TestHelpers;
 namespace Transformator.UnitTests
 {
     [TestFixture]
-    public class TransformationBuilderTests
+    public class TransformationBuilderTests : TestBase
     {
         public class MyAbstractTransformation : AbstractTransformation<Foo, Bar>
         {
@@ -83,7 +84,7 @@ namespace Transformator.UnitTests
         [Test]
         public void CreateInstance_InstanceFactoryIsNull_UseActivator()
         {
-            _builder.WithConfiguration(null);
+            _builder.WithConfiguration(new TransformationConfiguration());
 
             var result = _builder.CreateInstance<Foo>();
 
@@ -103,7 +104,7 @@ namespace Transformator.UnitTests
         }
 
         [Test]
-        public void WithConfiguration_PassedConfigurationIsNotNull_SetConfigurationProperty()
+        public void WithConfiguration_SetConfigurationProperty()
         {
             var settings = new TransformationConfiguration();
 
@@ -111,15 +112,6 @@ namespace Transformator.UnitTests
 
             Assert.AreEqual(_builder, builderInstance);
             Assert.AreEqual(settings, _builder.Configuration);
-        }
-
-        [Test]
-        public void WithConfiguration_PassedConfigurationIsNull_SetConfigurationPropertyToNull()
-        {
-            var builderInstance = _builder.WithConfiguration(null);
-
-            Assert.AreEqual(_builder, builderInstance);
-            Assert.IsNull(_builder.Configuration);
         }
 
         [Test]
@@ -137,9 +129,7 @@ namespace Transformator.UnitTests
         [Test]
         public void WithInitialValue_InitialValueIsNull_SetInitialInstanceFactoryPropertyToReturnNull()
         {
-            Bar initialValue = null;
-
-            var builderInstance = _builder.WithInitialValue(initialValue);
+            var builderInstance = _builder.WithInitialValue(null);
             var result = _builder.InitialDestinationFactory(null);
 
             Assert.AreEqual(_builder, builderInstance);
@@ -192,10 +182,10 @@ namespace Transformator.UnitTests
         [Test]
         public void Do_ActionParameterIsNull_ThrowException()
         {
-            var resultException = Assert.Throws<ArgumentException>(()=>_builder.Do(null));
+            var resultException = Assert.Throws<ArgumentNullException>(()=>_builder.Do(null));
 
             Assert.IsNotNull(resultException);
-            Assert.AreEqual("Argument 'action' cannot be null", resultException.Message);
+            Assert.AreEqual("action".GetArgumentNullExceptionMessage(), resultException.Message);
         }
 
         [Test]
@@ -225,19 +215,19 @@ namespace Transformator.UnitTests
         [Test]
         public void IfDo_PassedConditionIsNull_ThrowException()
         {
-            var resultException = Assert.Throws<ArgumentException>(() => _builder.IfDo(null, (s, d, c) => null));
+            var resultException = Assert.Throws<ArgumentNullException>(() => _builder.IfDo(null, (s, d, c) => null));
 
             Assert.IsNotNull(resultException);
-            Assert.AreEqual("Argument 'condition' cannot be null", resultException.Message);
+            Assert.AreEqual("condition".GetArgumentNullExceptionMessage(), resultException.Message);
         }
 
         [Test]
         public void IfDo_PassedActionIsNull_ThrowException()
         {
-            var resultException = Assert.Throws<ArgumentException>(()=>_builder.IfDo((_,_,_)=>true, null));
+            var resultException = Assert.Throws<ArgumentNullException>(()=>_builder.IfDo((_,_,_)=>true, null));
 
             Assert.IsNotNull(resultException);
-            Assert.AreEqual("Argument 'action' cannot be null", resultException.Message);
+            Assert.AreEqual("action".GetArgumentNullExceptionMessage(), resultException.Message);
         }
 
         [Test]
@@ -280,10 +270,10 @@ namespace Transformator.UnitTests
         [Test]
         public void Apply_NullTransformationPassed_ThrowException()
         {
-            var thrownException = Assert.Throws<ArgumentException>(() => _builder.Apply(null));
+            var thrownException = Assert.Throws<ArgumentNullException>(() => _builder.Apply(null));
 
             Assert.IsNotNull(thrownException);
-            Assert.AreEqual("Argument 'transformation' cannot be null", thrownException.Message);
+            Assert.AreEqual("transformation".GetArgumentNullExceptionMessage(), thrownException.Message);
         }
 
         [Test]
@@ -313,15 +303,28 @@ namespace Transformator.UnitTests
             Assert.AreEqual(1, _builder.Transformations.Count);
             Assert.AreEqual(transformation, _builder.Transformations[0]);
             Assert.IsTrue(transformation.IsIsolatedResult);
+            Assert.AreEqual(!TransformationConfiguration.Default.IsolateInitialDestination, transformation.KeepInitialDestination);
+        }
+
+        [Test]
+        public void ApplyIsolated_KeepInitialDestinationParameterPassed_SetItOnTransformer()
+        {
+            var transformation = new MyAbstractTransformation();
+            Assert.IsFalse(transformation.IsIsolatedResult);
+
+            var builderInstance = _builder.ApplyIsolated(transformation, false);
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.IsFalse(transformation.KeepInitialDestination);
         }
 
         [Test]
         public void ApplyIsolated_NullTransformationPassed_ThrowException()
         {
-            var thrownException = Assert.Throws<ArgumentException>(() => _builder.ApplyIsolated(null));
+            var thrownException = Assert.Throws<ArgumentNullException>(() => _builder.ApplyIsolated(null));
 
             Assert.IsNotNull(thrownException);
-            Assert.AreEqual("Argument 'transformation' cannot be null", thrownException.Message);
+            Assert.AreEqual("transformation".GetArgumentNullExceptionMessage(), thrownException.Message);
         }
 
         [Test]
@@ -339,6 +342,22 @@ namespace Transformator.UnitTests
             Assert.AreEqual(1, _builder.Transformations.Count);
             Assert.AreEqual(transformation, _builder.Transformations[0]);
             Assert.IsTrue(transformation.IsIsolatedResult);
+            Assert.AreEqual(!TransformationConfiguration.Default.IsolateInitialDestination, transformation.KeepInitialDestination);
+        }
+
+        [Test]
+        public void ApplyIsolated_Generic_KeepInitialDestinationParameterPassed_SetItOnTransformer()
+        {
+            var transformation = new MyAbstractTransformation();
+            Assert.IsFalse(transformation.IsIsolatedResult);
+
+            A.CallTo(() => _builder.CreateInstance<MyAbstractTransformation>())
+                .Returns(transformation);
+
+            var builderInstance = _builder.ApplyIsolated<MyAbstractTransformation>(false);
+
+            Assert.AreEqual(_builder, builderInstance);
+            Assert.IsFalse(transformation.KeepInitialDestination);
         }
 
         [Test]
@@ -369,19 +388,19 @@ namespace Transformator.UnitTests
         {
             var transformation = A.Fake<MyAbstractTransformation>();
 
-            var thrownException = Assert.Throws<ArgumentException>(() => _builder.IfApply(null, transformation));
+            var thrownException = Assert.Throws<ArgumentNullException>(() => _builder.IfApply(null, transformation));
 
             Assert.IsNotNull(thrownException);
-            Assert.AreEqual("Argument 'condition' cannot be null", thrownException.Message);
+            Assert.AreEqual("condition".GetArgumentNullExceptionMessage(), thrownException.Message);
         }
 
         [Test]
         public void IfApply_NullTransformationPassed_ThrowException()
         {
-            var thrownException = Assert.Throws<ArgumentException>(() => _builder.IfApply((s, d, c) => true, null));
+            var thrownException = Assert.Throws<ArgumentNullException>(() => _builder.IfApply((s, d, c) => true, null));
 
             Assert.IsNotNull(thrownException);
-            Assert.AreEqual("Argument 'transformation' cannot be null", thrownException.Message);
+            Assert.AreEqual("transformation".GetArgumentNullExceptionMessage(), thrownException.Message);
         }
 
         [Test]
@@ -413,6 +432,7 @@ namespace Transformator.UnitTests
             var conditionalTransformer = _builder.Transformations[0] as ConditionalTransformer<Foo, Bar>;
             Assert.IsNotNull(conditionalTransformer);
             Assert.IsTrue(conditionalTransformer.IsIsolatedResult);
+
             var transformationResult = conditionalTransformer.Transform(source, destination, context);
             Assert.AreEqual(transformedDestination, transformationResult);
         }
@@ -422,19 +442,19 @@ namespace Transformator.UnitTests
         {
             var transformation = A.Fake<MyAbstractTransformation>();
 
-            var thrownException = Assert.Throws<ArgumentException>(() => _builder.IfApplyIsolated(null, transformation));
+            var thrownException = Assert.Throws<ArgumentNullException>(() => _builder.IfApplyIsolated(null, transformation));
 
             Assert.IsNotNull(thrownException);
-            Assert.AreEqual("Argument 'condition' cannot be null", thrownException.Message);
+            Assert.AreEqual("condition".GetArgumentNullExceptionMessage(), thrownException.Message);
         }
 
         [Test]
         public void IfApplyIsolated_NullTransformationPassed_ThrowException()
         {
-            var thrownException = Assert.Throws<ArgumentException>(() => _builder.IfApplyIsolated((s, d, c) => true, null));
+            var thrownException = Assert.Throws<ArgumentNullException>(() => _builder.IfApplyIsolated((s, d, c) => true, null));
 
             Assert.IsNotNull(thrownException);
-            Assert.AreEqual("Argument 'transformation' cannot be null", thrownException.Message);
+            Assert.AreEqual("transformation".GetArgumentNullExceptionMessage(), thrownException.Message);
         }
     }
 }

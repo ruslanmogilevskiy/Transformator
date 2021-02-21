@@ -1,4 +1,6 @@
-﻿namespace Transformator
+﻿using Transformator.Configuration;
+
+namespace Transformator
 {
     /// <summary>
     /// Transformation builders factory.
@@ -11,7 +13,7 @@
         /// <returns>Transformation builder for specified data types.</returns>
         public static TransformationBuilder<TSource, TDestination> For<TSource, TDestination>()
         {
-            return new(TransformationConfiguration.Default?.Clone());
+            return new(TransformationConfiguration.Default.Clone());
         }
     }
 }

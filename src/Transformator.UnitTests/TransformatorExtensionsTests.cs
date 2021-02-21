@@ -8,7 +8,7 @@ using Transformator.UnitTests.TestHelpers;
 namespace Transformator.UnitTests
 {
     [TestFixture]
-    public class TransformatorExtensionsTests
+    public class TransformatorExtensionsTests : TestBase
     {
         [Test]
         public void Transform_ContextIsPassed_CallTransformatorTransformMethodWithContext_AndReturnResult()

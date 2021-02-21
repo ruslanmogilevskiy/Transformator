@@ -6,8 +6,8 @@ namespace Transformator.Transformers
     /// <summary>
     /// Base class for transformers from TSource to TDestination data types with specific transformation context.
     /// </summary>
-    /// <typeparam name="TSource">Source data type.</typeparam>
-    /// <typeparam name="TDestination">Destination data type.</typeparam>
+    /// <typeparam name="TSource">Source data type to transform from.</typeparam>
+    /// <typeparam name="TDestination">Destination data type to transform to.</typeparam>
     /// <typeparam name="TContext">Transformation context type.</typeparam>
     /// <seealso cref="Transformator.AbstractTransformation{TSource, TDestination}" />
     /// <seealso cref="Transformator.Interfaces.ITransformer{TSource, TDestination}" />

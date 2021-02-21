@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Transformator.Interfaces;
 
 namespace Transformator.Transformators
 {
@@ -10,9 +9,9 @@ namespace Transformator.Transformators
             AttachTo(builder);
         }
 
-        protected IList<IAbstractTransformation<TSource, TDestination>> GetTransformations()
+        protected IList<AbstractTransformation<TSource, TDestination>> GetTransformations()
         {
-            return Builder?.Transformations ?? new List<IAbstractTransformation<TSource, TDestination>>();
+            return Builder?.Transformations ?? new List<AbstractTransformation<TSource, TDestination>>();
         }
     }
 }

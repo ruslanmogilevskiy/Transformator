@@ -3,6 +3,13 @@ using Transformator.Models;
 
 namespace Transformator.Transformators
 {
+    /// <summary>
+    /// Does the transformation and returns single transformation result.
+    /// </summary>
+    /// <typeparam name="TSource">Source data type to transform from.</typeparam>
+    /// <typeparam name="TDestination">Destination data type to transform to.</typeparam>
+    /// <seealso cref="Transformator.Transformators.AbstractTransformator{TSource, TDestination}" />
+    /// <seealso cref="Transformator.Interfaces.ITransformator{TSource, TDestination}" />
     public class SingleResultTransformator<TSource, TDestination> : AbstractTransformator<TSource, TDestination>,
         ITransformator<TSource, TDestination>
     {
@@ -10,18 +17,15 @@ namespace Transformator.Transformators
         {
         }
 
+        /// <inheritdoc/>
         public override TDestination Transform(TSource source, TDestination initialDestination, TransformationContext context)
         {
             var destination = GetDestinationInstance(context, initialDestination);
             foreach (var transformer in GetTransformations())
             {
-                var result = transformer.Transform(source, destination, context);
-                // if some transformer returns NULL we end the transformation and return the current destination state.
-                // it`s used to stop the transformation by some condition.
-                if (result == null)
-                    break;
-
-                destination = result;
+                destination = transformer.Transform(source, destination, context);
+                if (destination == null)
+                    return default;
             }
 
             return destination;

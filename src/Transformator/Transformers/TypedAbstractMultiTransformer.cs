@@ -9,8 +9,8 @@ namespace Transformator.Transformers
     /// Base class for transformers from single TSource object to multiple TDestination objects with specific transformation context.
     /// </summary>
     /// <remarks>Notice that the Transform method is not supported and throw an exception.</remarks>
-    /// <typeparam name="TSource">Source data type.</typeparam>
-    /// <typeparam name="TDestination">Destination data type.</typeparam>
+    /// <typeparam name="TSource">Source data type to transform from.</typeparam>
+    /// <typeparam name="TDestination">Destination data type to transform to.</typeparam>
     /// <typeparam name="TContext">Transformation context type.</typeparam>
     /// <seealso cref="Transformator.AbstractTransformation{TSource, TDestination}" />
     /// <seealso cref="Transformator.Interfaces.ITransformer{TSource, TDestination}" />

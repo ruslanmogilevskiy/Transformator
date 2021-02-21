@@ -10,8 +10,8 @@ namespace Transformator
     public static class TransformatorExtensions
     {
         /// <summary>Transforms the specified source instance into single destination instance without specifying the initial destination instance.</summary>
-        /// <typeparam name="TSource">Source data type.</typeparam>
-        /// <typeparam name="TDestination">Destination data type.</typeparam>
+        /// <typeparam name="TSource">Source data type to transform from.</typeparam>
+        /// <typeparam name="TDestination">Destination data type to transform to.</typeparam>
         /// <param name="transformator">Transformator to apply the extension to.</param>
         /// <param name="source">Source instance to transform.</param>
         /// <param name="context">Transformation context.</param>
@@ -23,8 +23,8 @@ namespace Transformator
         }
 
         /// <summary>Transforms the specified source instance into multiple destination instances without specifying the initial destination instance.</summary>
-        /// <typeparam name="TSource">Source data type.</typeparam>
-        /// <typeparam name="TDestination">Destination data type.</typeparam>
+        /// <typeparam name="TSource">Source data type to transform from.</typeparam>
+        /// <typeparam name="TDestination">Destination data type to transform to.</typeparam>
         /// <param name="transformator">Transformator to apply the extension to.</param>
         /// <param name="source">Source instance to transform.</param>
         /// <param name="context">Transformation context.</param>

@@ -7,7 +7,7 @@ using Transformator.UnitTests.TestHelpers;
 namespace Transformator.UnitTests.Transformers
 {
     [TestFixture]
-    public class TypedAbstractTransformerTests
+    public class TypedAbstractTransformerTests : TestBase
     {
         public class MyTypedAbstractTransformer : TypedAbstractTransformer<Foo, Bar, TransformationContext>
         {

@@ -1,9 +1,12 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
+using Transformator.Configuration;
+using Transformator.UnitTests.TestHelpers;
 
 namespace Transformator.UnitTests
 {
     [TestFixture]
-    public class TransformationConfigurationTests
+    public class TransformationConfigurationTests : TestBase
     {
         [Test]
         public void Clone_ReturnClonedConfiguration()
@@ -21,6 +24,25 @@ namespace Transformator.UnitTests
             Assert.AreEqual(config.InstanceFactory, result.InstanceFactory);
             config.InstanceFactory = _ => new object();
             Assert.AreNotEqual(config.InstanceFactory, result.InstanceFactory);
+        }
+
+        [Test]
+        public void Default_SetToNullValue_ThrowException()
+        {
+            var exception = Assert.Throws<ArgumentNullException>(() => TransformationConfiguration.Default = null);
+
+            Assert.IsNotNull(exception);
+            Assert.AreEqual("value".GetArgumentNullExceptionMessage(), exception.Message);
+        }
+
+        [Test]
+        public void Default_SetToNotNullValue_UpdateDefaultConfiguration()
+        {
+            var config = new TransformationConfiguration();
+
+            TransformationConfiguration.Default = config;
+
+            Assert.AreEqual(config, TransformationConfiguration.Default);
         }
     }
 }

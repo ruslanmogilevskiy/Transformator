@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Transformator.Helpers;
+using Transformator.UnitTests.TestHelpers;
 
 namespace Transformator.UnitTests.Helpers
 {
@@ -26,10 +27,10 @@ namespace Transformator.UnitTests.Helpers
         [Test]
         public void NotNull_PassedArgumentIsNull_ExceptionThrown()
         {
-            var thrownException = Assert.Throws<ArgumentException>(() => ArgGuard.NotNull(null, "arg2"));
+            var thrownException = Assert.Throws<ArgumentNullException>(() => ArgGuard.NotNull(null, "arg2"));
 
             Assert.IsNotNull(thrownException);
-            Assert.AreEqual("Argument 'arg2' cannot be null", thrownException.Message);
+            Assert.AreEqual("arg2".GetArgumentNullExceptionMessage(), thrownException.Message);
         }
     }
 }

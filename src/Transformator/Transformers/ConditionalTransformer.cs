@@ -6,8 +6,8 @@ namespace Transformator.Transformers
     /// <summary>
     /// Evaluates the passed condition and do the transformation only if it <c>true</c>.
     /// </summary>
-    /// <typeparam name="TSource">Source data type.</typeparam>
-    /// <typeparam name="TDestination">Destination data type.</typeparam>
+    /// <typeparam name="TSource">Source data type to transform from.</typeparam>
+    /// <typeparam name="TDestination">Destination data type to transform to.</typeparam>
     internal class ConditionalTransformer<TSource, TDestination> : AbstractTransformer<TSource, TDestination>
     {
         readonly Func<TSource, TDestination, TransformationContext, bool> _condition;

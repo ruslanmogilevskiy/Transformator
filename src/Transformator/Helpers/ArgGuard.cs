@@ -14,7 +14,7 @@ namespace Transformator.Helpers
         public static void NotNull(object arg, string argName)
         {
             if (arg == null)
-                throw new ArgumentException($"Argument '{argName}' cannot be null");
+                throw new ArgumentNullException(argName);
         }
     }
 }

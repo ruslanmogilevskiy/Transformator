@@ -6,8 +6,8 @@ namespace Transformator.Interfaces
     /// <summary>
     /// Transforms a single source object to multiple destination objects.
     /// </summary>
-    /// <typeparam name="TSource">Source data type.</typeparam>
-    /// <typeparam name="TDestination">Destination data type.</typeparam>
+    /// <typeparam name="TSource">Source data type to transform from.</typeparam>
+    /// <typeparam name="TDestination">Destination data type to transform to.</typeparam>
     public interface IMultiTransformator<TSource, TDestination> : ITransformator<TSource, TDestination>
     {
         /// <summary>Do the transformation.</summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using Transformator.Configuration;
 
 namespace Transformator.Helpers
 {
