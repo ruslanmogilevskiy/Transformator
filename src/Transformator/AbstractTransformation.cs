@@ -1,8 +1,8 @@
-﻿using Transformator.Helpers;
-using Transformator.Interfaces;
-using Transformator.Models;
+﻿using Rumo.Transformator.Helpers;
+using Rumo.Transformator.Interfaces;
+using Rumo.Transformator.Models;
 
-namespace Transformator
+namespace Rumo.Transformator
 {
     /// <summary>
     /// Abstracts the transformation of source to destination data types.

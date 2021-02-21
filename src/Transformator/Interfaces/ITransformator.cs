@@ -1,4 +1,4 @@
-﻿namespace Transformator.Interfaces
+﻿namespace Rumo.Transformator.Interfaces
 {
     /// <summary>
     /// Transforms an object via chain of registered transformations.

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Transformator.Configuration;
+using Rumo.Transformator.Configuration;
 
-namespace Transformator.UnitTests.TestHelpers
+namespace Rumo.Transformator.UnitTests.TestHelpers
 {
     public abstract class TestBase
     {

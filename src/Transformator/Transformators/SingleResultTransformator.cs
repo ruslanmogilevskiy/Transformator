@@ -1,7 +1,7 @@
-﻿using Transformator.Interfaces;
-using Transformator.Models;
+﻿using Rumo.Transformator.Interfaces;
+using Rumo.Transformator.Models;
 
-namespace Transformator.Transformators
+namespace Rumo.Transformator.Transformators
 {
     /// <summary>
     /// Does the transformation and returns single transformation result.

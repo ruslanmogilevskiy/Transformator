@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Transformator.Models;
+using Rumo.Transformator.Models;
 
-namespace Transformator.Interfaces
+namespace Rumo.Transformator.Interfaces
 {
     /// <summary>
     /// Transforms a single source object to multiple destination objects.

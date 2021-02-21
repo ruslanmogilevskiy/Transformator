@@ -1,4 +1,4 @@
-﻿namespace Transformator.Interfaces
+﻿namespace Rumo.Transformator.Interfaces
 {
     /// <summary>
     /// Single piece of an object transformation. Transforms an object from one state to another.

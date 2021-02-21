@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Transformator.Models;
+using Rumo.Transformator.Models;
 
-namespace Transformator.Transformers
+namespace Rumo.Transformator.Transformers
 {
     /// <summary>
     /// Base transformer that uses <see cref="TransformationContext"/> as a transformation context.

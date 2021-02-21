@@ -1,6 +1,6 @@
-﻿using Transformator.Configuration;
+﻿using Rumo.Transformator.Configuration;
 
-namespace Transformator
+namespace Rumo.Transformator
 {
     /// <summary>
     /// Transformation builders factory.

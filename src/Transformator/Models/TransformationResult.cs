@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Transformator.Models
+namespace Rumo.Transformator.Models
 {
     class TransformationResult<TDestination>
     {

@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
 
-namespace Transformator.UnitTests.TestHelpers
+namespace Rumo.Transformator.UnitTests.TestHelpers
 {
     static class TestExtensions
     {

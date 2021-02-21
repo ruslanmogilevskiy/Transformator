@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Transformator.Helpers
+namespace Rumo.Transformator.Helpers
 {
     /// <summary>
     /// Asserts on arguments.

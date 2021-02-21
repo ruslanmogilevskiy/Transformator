@@ -1,10 +1,10 @@
 ﻿using FakeItEasy;
 using NUnit.Framework;
-using Transformator.Models;
-using Transformator.Transformers;
-using Transformator.UnitTests.TestHelpers;
+using Rumo.Transformator.Models;
+using Rumo.Transformator.Transformers;
+using Rumo.Transformator.UnitTests.TestHelpers;
 
-namespace Transformator.UnitTests.Transformers
+namespace Rumo.Transformator.UnitTests.Transformers
 {
     [TestFixture]
     public class TypedAbstractTransformerTests : TestBase

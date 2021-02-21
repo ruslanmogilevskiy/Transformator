@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Transformator.Models;
-using Transformator.Transformators;
-using Transformator.Transformers;
+using Rumo.Transformator.Models;
+using Rumo.Transformator.Transformators;
+using Rumo.Transformator.Transformers;
 
-namespace Transformator.UnitTests.TestHelpers
+namespace Rumo.Transformator.UnitTests.TestHelpers
 {
     public class Foo
     {

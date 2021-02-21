@@ -1,7 +1,7 @@
 ﻿using System;
-using Transformator.Configuration;
+using Rumo.Transformator.Configuration;
 
-namespace Transformator.Helpers
+namespace Rumo.Transformator.Helpers
 {
     internal static class TransformationExtensions
     {

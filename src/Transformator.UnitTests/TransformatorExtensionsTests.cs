@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using FakeItEasy;
 using NUnit.Framework;
-using Transformator.Interfaces;
-using Transformator.Models;
-using Transformator.UnitTests.TestHelpers;
+using Rumo.Transformator.Interfaces;
+using Rumo.Transformator.Models;
+using Rumo.Transformator.UnitTests.TestHelpers;
 
-namespace Transformator.UnitTests
+namespace Rumo.Transformator.UnitTests
 {
     [TestFixture]
     public class TransformatorExtensionsTests : TestBase

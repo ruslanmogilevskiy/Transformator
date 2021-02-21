@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Transformator.Transformators
+namespace Rumo.Transformator.Transformators
 {
     public abstract class AbstractTransformator<TSource, TDestination> : AbstractTransformation<TSource, TDestination>
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using FakeItEasy;
 using NUnit.Framework;
-using Transformator.Configuration;
-using Transformator.Models;
-using Transformator.Transformators;
-using Transformator.Transformers;
-using Transformator.UnitTests.TestHelpers;
+using Rumo.Transformator.Configuration;
+using Rumo.Transformator.Models;
+using Rumo.Transformator.Transformators;
+using Rumo.Transformator.Transformers;
+using Rumo.Transformator.UnitTests.TestHelpers;
 
-namespace Transformator.UnitTests
+namespace Rumo.Transformator.UnitTests
 {
     [TestFixture]
     public class TransformationBuilderTests : TestBase

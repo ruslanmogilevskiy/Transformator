@@ -1,7 +1,7 @@
 ﻿using System;
-using Transformator.Models;
+using Rumo.Transformator.Models;
 
-namespace Transformator.Transformers
+namespace Rumo.Transformator.Transformers
 {
     /// <summary>
     /// Transformer that executes an action on transformation.

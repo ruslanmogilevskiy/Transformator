@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
-using Transformator.Models;
-using Transformator.UnitTests.TestHelpers;
+using Rumo.Transformator.Models;
+using Rumo.Transformator.UnitTests.TestHelpers;
 
-namespace Transformator.UnitTests.Models
+namespace Rumo.Transformator.UnitTests.Models
 {
     [TestFixture]
     public class TransformationResultTests
@@ -30,7 +30,7 @@ namespace Transformator.UnitTests.Models
 
             var result = _transformationResult.HasNotNullDestination();
 
-            Assert.IsFalse(result);
+            Assert.IsFalse((bool) result);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Transformator.UnitTests.Models
 
             var result = _transformationResult.HasNotNullDestination();
 
-            Assert.IsTrue(result);
+            Assert.IsTrue((bool) result);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Transformator.UnitTests.Models
 
             var result = _transformationResult.IsEmpty();
 
-            Assert.IsTrue(result);
+            Assert.IsTrue((bool) result);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Transformator.UnitTests.Models
 
             var result = _transformationResult.IsEmpty();
 
-            Assert.IsFalse(result);
+            Assert.IsFalse((bool) result);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Transformator.UnitTests.Models
 
             var result = _transformationResult.IsEmpty();
 
-            Assert.IsFalse(result);
+            Assert.IsFalse((bool) result);
         }
 
         [Test]

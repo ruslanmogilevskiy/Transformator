@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Transformator.Helpers;
+using Rumo.Transformator.Helpers;
 
-namespace Transformator.Configuration
+namespace Rumo.Transformator.Configuration
 {
     /// <summary>
     /// Global configuration and settings that're applied to all created transformations.

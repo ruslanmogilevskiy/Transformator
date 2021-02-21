@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Transformator.UnitTests.TestHelpers;
+using Rumo.Transformator.UnitTests.TestHelpers;
 
-namespace Transformator.UnitTests.Transformators
+namespace Rumo.Transformator.UnitTests.Transformators
 {
     [TestFixture]
     public class SingleResultTransformatorTests : TestBase

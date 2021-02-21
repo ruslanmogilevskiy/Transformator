@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using Transformator.Models;
-using Transformator.Transformators;
-using Transformator.UnitTests.TestHelpers;
+using Rumo.Transformator.Models;
+using Rumo.Transformator.Transformators;
+using Rumo.Transformator.UnitTests.TestHelpers;
 
-namespace Transformator.UnitTests.Transformators
+namespace Rumo.Transformator.UnitTests.Transformators
 {
     [TestFixture]
     public class AbstractTransformatorTests : TestBase

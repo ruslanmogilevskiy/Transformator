@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Version>0.6.1</Version>
+    <Version>1.0.0</Version>
     <Authors>Ruslan Mogilevskiy</Authors>
     <Description>Transforms one data object into one or many of others with flexibly and fluently defined tree of transformers.</Description>
     <Copyright>Ruslan Mogilevskiy</Copyright>
@@ -12,10 +12,10 @@
     <PackageTags>transformation, mapper, convertion</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <AssemblyVersion>0.6.1.0</AssemblyVersion>
-    <FileVersion>0.6.1.0</FileVersion>
-    <AssemblyName>Transformator</AssemblyName>
-    <RootNamespace>Transformator</RootNamespace>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyName>Rumo.Transformator</AssemblyName>
+    <RootNamespace>Rumo.Transformator</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

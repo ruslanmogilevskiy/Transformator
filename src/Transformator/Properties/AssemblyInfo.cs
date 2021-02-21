@@ -1,4 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Transformator.UnitTests")]
+[assembly: InternalsVisibleTo("Rumo.Transformator.UnitTests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

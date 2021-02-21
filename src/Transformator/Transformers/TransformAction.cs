@@ -1,4 +1,4 @@
-﻿namespace Transformator.Transformers
+﻿namespace Rumo.Transformator.Transformers
 {
     /// <summary>
     /// Defines what to do at the particular transformation step.

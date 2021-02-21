@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Transformator.Interfaces;
+using Rumo.Transformator.Interfaces;
 
-namespace Transformator.Models
+namespace Rumo.Transformator.Models
 {
     /// <summary>
     /// Used to traverse the transformation context (data) across different transformations.

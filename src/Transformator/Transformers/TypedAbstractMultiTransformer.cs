@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Transformator.Interfaces;
-using Transformator.Models;
+using Rumo.Transformator.Interfaces;
+using Rumo.Transformator.Models;
 
-namespace Transformator.Transformers
+namespace Rumo.Transformator.Transformers
 {
     /// <summary>
     /// Base class for transformers from single TSource object to multiple TDestination objects with specific transformation context.

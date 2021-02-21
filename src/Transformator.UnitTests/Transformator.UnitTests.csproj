@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <AssemblyName>Transformator.UnitTests</AssemblyName>
+    <AssemblyName>Rumo.Transformator.UnitTests</AssemblyName>
+    <RootNamespace>Rumo.Transformator.UnitTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

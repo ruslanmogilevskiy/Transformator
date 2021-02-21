@@ -1,7 +1,7 @@
 ﻿using System;
-using Transformator.Models;
+using Rumo.Transformator.Models;
 
-namespace Transformator.Transformers
+namespace Rumo.Transformator.Transformers
 {
     /// <summary>
     /// Evaluates the passed condition and do the transformation only if it <c>true</c>.

@@ -1,6 +1,6 @@
-﻿using Transformator.Models;
+﻿using Rumo.Transformator.Models;
 
-namespace Transformator.Interfaces
+namespace Rumo.Transformator.Interfaces
 {
     /// <summary>
     /// Base class for an abstract transformation step or flow.

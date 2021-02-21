@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Transformator.Interfaces;
-using Transformator.Models;
+using Rumo.Transformator.Interfaces;
+using Rumo.Transformator.Models;
 
-namespace Transformator.Transformators
+namespace Rumo.Transformator.Transformators
 {
     /// <summary>Transformations single source to multiple destination objects.</summary>
     /// <typeparam name="TSource">Source data type to transform from.</typeparam>
