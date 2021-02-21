@@ -1,33 +1,43 @@
-﻿using Transformator.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using Transformator.Interfaces;
 using Transformator.Models;
 
 namespace Transformator.Transformers
 {
     /// <summary>
-    /// Base class for transformers from TSource to TDestination data types with specific transformation context.
+    /// Base class for transformers from single TSource object to multiple TDestination objects with specific transformation context.
     /// </summary>
+    /// <remarks>Notice that the Transform method is not supported and throw an exception.</remarks>
     /// <typeparam name="TSource">Source data type.</typeparam>
     /// <typeparam name="TDestination">Destination data type.</typeparam>
     /// <typeparam name="TContext">Transformation context type.</typeparam>
     /// <seealso cref="Transformator.AbstractTransformation{TSource, TDestination}" />
     /// <seealso cref="Transformator.Interfaces.ITransformer{TSource, TDestination}" />
-    public abstract class TypedAbstractTransformer<TSource, TDestination, TContext> : AbstractTransformation<TSource, TDestination>,
-        ITransformer<TSource, TDestination> where TContext : TransformationContext
+    public abstract class TypedAbstractMultiTransformer<TSource, TDestination, TContext> : AbstractTransformation<TSource, TDestination>,
+        IMultiTransformer<TSource, TDestination> where TContext : TransformationContext
     {
         /// <inheritdoc />
         public override TDestination Transform(TSource source, TDestination destination, TransformationContext context)
         {
+            throw new NotSupportedException($"Only multi-transformation is supported via {nameof(TransformMulti)} method");
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<TDestination> TransformMulti(TSource source, TDestination destination = default,
+            TransformationContext context = null)
+        {
             switch (CanTransform(source, destination, (TContext) context))
             {
                 case TransformAction.Transform:
-                    return DoTransform(source, destination, (TContext) context);
+                    return DoMultiTransform(source, destination, (TContext) context);
 
                 case TransformAction.PassThrough:
-                    return destination;
+                    return new[]{ destination };
 
                 case TransformAction.BreakTransformation:
                 default:
-                    return default;
+                    return new TDestination[0];
             }
         }
 
@@ -42,11 +52,11 @@ namespace Transformator.Transformers
             return TransformAction.Transform;
         }
 
-        /// <summary>Do actual transformation.</summary>
+        /// <summary>Do actual transformation with multiple destination results.</summary>
         /// <param name="source">Source data instance.</param>
         /// <param name="destination">Destination data instance.</param>
         /// <param name="context">Transformation context.</param>
-        /// <returns>Transformation's result. Usually it's the same received destination object parameter.</returns>
-        protected abstract TDestination DoTransform(TSource source, TDestination destination, TContext context);
+        /// <returns>Transformation's result objects.</returns>
+        protected abstract IEnumerable<TDestination> DoMultiTransform(TSource source, TDestination destination, TContext context);
     }
 }
