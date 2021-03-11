@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Work\Projects\Libraries\Transformator\src\Transformator\Transformator.xml</DocumentationFile>
+    <DocumentationFile>Rumo.Transformator.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

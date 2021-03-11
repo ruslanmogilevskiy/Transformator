@@ -1,7 +1,7 @@
 # Transformator
-Transforms one data object into one or many of others with flexibly and fluently defined tree of transformers.
+Transforms one source data object to one or many destination objects with flexibly and fluently defined tree of transformers, with a single responsibility, testability, and reusability in mind from the beginning.
 
-**Downloads**: 
+**Packages**
 
 <a href="https://www.nuget.org/packages/Rumo.Transformator/" alt="Contributors">
     <img src="https://img.shields.io/nuget/v/Rumo.Transformator" /><br/><br/>
@@ -9,8 +9,25 @@ Transforms one data object into one or many of others with flexibly and fluently
 
 
 
-**Use cases**: 
-* you have an income message/event/request and based on it you need to produce one or more, possibly linked to or dependant on each other data objects. This could be done in scope of a business workflow or an income request processing.
+**The ideas behind the Transformator**
+
+* Transformator requires that you have a source data object to transform. 
+* Then you split your data transformation flow to steps, they will be transformers. There could be one or many transformers involved to produce one _destination_ object (transformation result).
+* Each transformer uses the previous transformer's result as a basis to do own transformation but could create an other destination object or even of a different type.
+* By default, all transformers are grouped into one group and produce a single destination object.
+* But some transformers could run own isolated (from the main transformation flow) transformation by forming a transformation tree's leaf. In this case, they produce a separate destination object, i.e. the whole transformation flow produces multiple transformation results.
+
+![alt text](docs/img/transformation_flow.png?raw=true)
+
+
+**Use case**
+
+Say you've received a 'new order' event and based on you need to produce one or more, possibly linked or dependant on each other notification messages for the customer, like an email, Telegram and Slack messages, and also format a log message based on the sent email to be stored in your system's log, as described on the below picture:
+
+![alt text](docs/img/use_case.png?raw=true)
+
+
+
 
 **Features**
 
